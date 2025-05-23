@@ -8,13 +8,17 @@ class Train {
     bool light; // состояние лампочки
     Car *next;
     Car *prev;
+    explicit Car(bool l == false) : light(l), next(this), prev(this) {}
   };
   int countOp; // счетчик шагов (число переходов из вагона в вагон)
   Car *first; // точка входа в поезд (первый вагон)
+};
+
  public:
   Train();
+   ~Train();
   void addCar(bool light); // добавить вагон с начальным состоянием лампочки
   int getLength();          // вычислить длину поезда
-  int getOpCount();         // вернуть число переходов (из вагона в вагон)
+  int getOpCount() const { return countOp; }         // вернуть число переходов (из вагона в вагон)
 };
 #endif  // INCLUDE_TRAIN_H_
