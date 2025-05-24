@@ -1,70 +1,103 @@
 // Copyright 2021 NNTU-CS
 #include "train.h"
 
+class Train {
+public:
+Train();
+~Train();
+
+void addCar(bool light);
+int getLength();
+
+private:
+struct Car {
+bool light;
+Car* next;
+Car* prev;
+
+Car(bool l) : light(l), next(nullptr), prev(nullptr) {}
+};
+
+Car* first;
+int countOp;
+};
+
 Train::Train() : first(nullptr), countOp(0) {}
 
-Train::~Train () {
+Train::~Train() {
 if (!first) return;
-Car *cur = first->next;
-while (cur != first) {
-Car* temp = cur;
-cur = cur-›next;
-delete temp;
+
+Car* current = first->next;
+while (current != first) {
+Car* toDelete = current;
+current = current->next;
+delete toDelete;
 }
 delete first;
 }
-void Train: : addCar(bool light) {
-Car* newCar = new Car (light);
+
+void Train::addCar(bool light) {
+Car* newCar = new Car(light);
 if (!first) {
 first = newCar;
-first-›next = first;
+first->next = first;
+first->prev = first;
 } else {
-Car* last = first-›prev;
-last-›next = newCar; 
-newCar-›prev = last; 
-newCar-›next = first;
-first-›prev = newCar;
+Car* lastCar = first->prev;
+lastCar->next = newCar;
+newCar->prev = lastCar;
+newCar->next = first;
+first->prev = newCar;
 }
 }
-int Train: : getLength () {
-countop = 0;
+
+int Train::getLength() {
+countOp = 0;
+
 if (!first) return 0;
-const Car* ptr = first;
-bool lightFound = false;
+
+Car* current = first;
+bool hasLight = false;
 do {
-if (ptr->light) {
-lightFound = true;
+if (current->light) {
+hasLight = true;
 break;
 }
-ptr = ptr-›next;
-} while (ptr != first);
-if (!lightFound) {
-first-›light = true;
-const Car* wal = first-›next;
-++countop;
-int len = 1;
-while (wal!= first) {
-wal = wal-›next;
-++countOp; 
-++len;
-}
-for (int64_t i = 0; i ‹ len; ++i) {
-wal = wal-›prev;
+current = current->next;
+} while (current != first);
+
+if (!hasLight) {
+first->light = true;
+Car* iterator = first->next;
 ++countOp;
-}
-first-›light = false;
-return len;
-}
-else {
-const Car* wal = first-›next;
-++countOp;
-int64_t length = 1;
-while (wal != first) {
-wal = wal-›next;
+int length = 1;
+
+while (iterator != first) {
+iterator = iterator->next;
 ++countOp;
 ++length;
 }
-countOp += length * length;
+
+iterator = iterator->prev;
+for (int i = 0; i < length; ++i) {
+iterator = iterator->prev;
+++countOp;
+}
+
+first->light = false;
+return length;
+} else {
+
+Car* iterator = first->next;
+++countOp;
+int length = 1;
+
+while (iterator != first) {
+iterator = iterator->next;
+++countOp;
+++length;
+}
+countOp += static_cast<long long>(length) * length;
 return length;
 }
 }
