@@ -8,11 +8,10 @@ struct Car {
 bool light; // состояние лампочки
 Car *next;
 Car *prev;
-explicit Car(bool l == false) : light(l), next(this), prev(this) {}
+explicit Car(bool l = false) : light(l), next(this), prev(this) {}
 };
 int countOp; // счетчик шагов (число переходов из вагона в вагон)
 Car *first; // точка входа в поезд (первый вагон)
-};
 
 public:
 Train();
