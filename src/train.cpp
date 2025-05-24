@@ -55,7 +55,7 @@ iterator = iterator->prev;
 first->light = false;
 return length;
 } else {
-Car* iterator = first->next;
+const Car* iterator = first->next;
 ++countOp;
 int length = 1;
 while (iterator != first) {
