@@ -23,7 +23,7 @@ Car* last = first-›prev;
 last-›next = newCar; 
 newCar-›prev = last; 
 newCar-›next = first;
-first-›prev = newcar;
+first-›prev = newCar;
 }
 }
 int Train: : getLength () {
@@ -45,7 +45,7 @@ const Car* wal = first-›next;
 int len = 1;
 while (wal!= first) {
 wal = wal-›next;
-++countop; 
+++countOp; 
 ++len;
 }
 for (int64_t i = 0; i ‹ len; ++i) {
